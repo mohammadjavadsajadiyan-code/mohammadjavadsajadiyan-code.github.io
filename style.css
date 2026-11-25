@@ -1,0 +1,2126 @@
+/* ============================================================
+   استایل سایت صنایع اتصالات شیبا
+   هر بخش با کامنت فارسی توضیح داده شده است.
+   ============================================================ */
+
+/* ---------- فونت‌ها ---------- */
+
+/* وزن معمولی (۴۰۰): برای متن‌های عادی */
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("assets/vazirmatn-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap; /* تا آماده شدن فونت، متن با فونت جایگزین دیده می‌شود */
+}
+
+/* وزن نیمه‌ضخیم (۶۰۰): برای زیرعنوان‌ها */
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("assets/vazirmatn-semibold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* وزن خیلی ضخیم (۸۰۰): برای تیترها */
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("assets/vazirmatn-extrabold.woff2") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---------- متغیرهای رنگ و اندازه ---------- */
+/* این‌ها «متغیر» هستند؛ یک‌بار تعریف می‌شوند و همه‌جا با var() استفاده می‌شوند */
+
+:root {
+  --ink: #080b0f; /* مشکی اصلی سایت */
+  --ink-2: #0c1117; /* مشکی کمی روشن‌تر */
+  --panel: #131a22; /* رنگ کارت‌های تیره */
+  --panel-2: #18202a; /* رنگ دوم کارت‌های تیره */
+  --cream: #f5f1e8; /* کرم روشن (متن روی پس‌زمینه تیره) */
+  --paper: #fbf8f1; /* پس‌زمینه بخش‌های روشن */
+  --gold: #d9a62e; /* طلایی اصلی */
+  --gold-2: #f2cf6b; /* طلایی روشن (هایلایت) */
+  --gold-soft: rgba(217, 166, 46, 0.12); /* طلایی خیلی کم‌رنگ برای پس‌زمینه */
+  --text: #151a20; /* رنگ متن روی پس‌زمینه روشن */
+  --muted: #66707d; /* متن خاکستری کم‌رنگ (روی روشن) */
+  --muted-dark: #97a2ae; /* متن خاکستری کم‌رنگ (روی تیره) */
+  --line: rgba(255, 255, 255, 0.09); /* خط جداکننده روی تیره */
+  --line-dark: rgba(11, 14, 18, 0.1); /* خط جداکننده روی روشن */
+  --container: 1180px; /* حداکثر عرض محتوا */
+  --radius: 22px; /* گردی گوشه‌های کارت‌ها */
+  --shadow: 0 24px 60px rgba(0, 0, 0, 0.18); /* سایه‌ی کارت‌ها */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1); /* منحنی حرکت انیمیشن‌ها (نرم) */
+}
+
+/* ---------- تنظیمات پایه ---------- */
+
+/* همه‌ی عناصر: اندازه‌ی جعبه شامل padding و border هم حساب شود */
+* {
+  box-sizing: border-box;
+}
+
+/* صفحه‌ی اصلی: اسکرول نرم و فاصله‌ی لنگرها از بالای صفحه */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px; /* وقتی روی لینک بخش‌ها کلیک می‌شود، هدر روی محتوا نیفتد */
+}
+
+/* بدنه‌ی سایت: فونت، رنگ و پس‌زمینه‌ی کلی */
+body {
+  margin: 0;
+  font-family:
+    "Vazirmatn", Tahoma, Arial, sans-serif; /* فونت اصلی و جایگزین‌ها */
+  font-size: 16px;
+  line-height: 1.9; /* فاصله‌ی خطوط */
+  color: var(--cream);
+  background: var(--ink);
+  -webkit-font-smoothing: antialiased; /* نرم‌تر شدن فونت در مرورگرهای وب‌کیت */
+  text-rendering: optimizeLegibility;
+
+  /* نام تایم‌لاین سنتینل را در کل صفحه قابل استفاده می‌کند
+     تا هدر بتواند بفهمد کِی به بالای صفحه چسبیده است */
+  timeline-scope: --header-stick;
+}
+
+/* همه‌ی تصاویر: بلوکی باشند و از عرض والد بیرون نزنند */
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* همه‌ی لینک‌ها: رنگ ارثی و بدون خط زیر */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* دکمه‌ها هم فونت و رنگ خودشان را از والد بگیرند (نه فونت پیش‌فرض مرورگر) */
+button {
+  font: inherit;
+  color: inherit;
+}
+
+/* رنگ متن انتخابی (وقتی کاربر با موس متن را انتخاب می‌کند) */
+::selection {
+  background: var(--gold);
+  color: var(--ink);
+}
+
+/* حالت فوکوس (وقتی با کیبورد روی عنصر می‌رویم): کادر طلایی واضح برای دسترس‌پذیری */
+:focus-visible {
+  outline: 2px solid var(--gold-2);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* کانتینر: محتوا را وسط صفحه می‌گذارد و حداکثر عرض می‌دهد */
+.container {
+  width: min(
+    var(--container),
+    calc(100% - 48px)
+  ); /* بیشترین حالت: ۱۱۸۰px یا ۴۸px کمتر از صفحه */
+  margin-inline: auto; /* وسط‌چین کردن */
+}
+
+/* لینک «رفتن به محتوای اصلی»: فقط برای کاربران کیبوردی، بیرون صفحه پنهان است */
+.skip-link {
+  position: fixed;
+  top: -80px; /* بالای صفحه، مخفی */
+  inset-inline-start: 16px;
+  z-index: 200;
+  padding: 10px 18px;
+  border-radius: 10px;
+  background: var(--gold);
+  color: var(--ink);
+  font-weight: 700;
+  transition: top 0.25s var(--ease);
+}
+
+/* وقتی با کیبورد روی لینک برویم، می‌آید داخل صفحه */
+.skip-link:focus {
+  top: 16px;
+}
+
+/* ---------- نوار بالای سایت (Topbar) ---------- */
+
+.topbar {
+  background: #04070a; /* تیره‌تر از هدر */
+  border-bottom: 1px solid var(--line);
+  font-size: 0.76rem;
+  color: var(--muted-dark);
+}
+
+/* چیدمان داخلی نوار بالا: تلفن/تلگرام سمت شروع، نوشته سمت پایان */
+.topbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding-block: 8px;
+}
+
+/* گروه تلفن و تلگرام */
+.topbar-contact {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* لینک‌های داخل نوار بالا: تغییر رنگ نرم هنگام هاور */
+.topbar-contact a {
+  transition: color 0.25s;
+}
+
+.topbar-contact a:hover {
+  color: var(--gold-2);
+}
+
+/* نقطه‌ی طلایی کوچک جداکننده */
+.topbar .dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--gold);
+  opacity: 0.8;
+}
+
+/* نوشته‌ی «تولیدکننده لوازم بهداشتی...» */
+.topbar-badge {
+  margin: 0;
+  color: var(--muted-dark);
+}
+
+/* ---------- هدر سایت + سنتینل (تشخیص چسبیدن، بدون جاوااسکریپت) ---------- */
+
+/* سنتینل: همان ۱ پیکسل نامرئی که در HTML قبل از هدر گذاشتیم.
+   این عنصر یک «تایم‌لاین اسکرول» می‌سازد تا CSS بفهمد
+   هدر دقیقاً کِی به بالای صفحه می‌چسبد.
+   (قبلاً این کار با جاوااسکریپت و کلاس is-scrolled انجام می‌شد و حذف شد) */
+.header-sentinel {
+  display: block;
+  height: 1px; /* فقط ۱ پیکسل ارتفاع دارد */
+  margin-top: -1px; /* همان ۱ پیکسل را به بالا می‌کشد؛ پس هیچ فضایی در صفحه اشغال نمی‌کند */
+  opacity: 0; /* نامرئی است */
+  pointer-events: none; /* جلوی کلیک کاربر را نمی‌گیرد */
+  view-timeline: --header-stick block; /* تایم‌لاین اسکرول با نام header-stick در جهت عمودی */
+  view-timeline-inset: 0; /* مهم: scroll-padding بالای صفحه (۹۶px) را روی این تایم‌لاین اثر ندهد */
+}
+
+/* خود هدر سایت */
+.site-header {
+  position: sticky; /* هنگام اسکرول به بالای صفحه می‌چسبد */
+  top: 0; /* فاصله‌ی چسبیدن از بالای صفحه: صفر */
+  z-index: 100; /* بالای بقیه‌ی محتوای صفحه قرار می‌گیرد */
+  background: rgba(8, 11, 15, 0.76); /* رنگ حالت عادی: تیره و کمی شفاف */
+  backdrop-filter: blur(18px); /* پشت هدر محو (شیشه‌ای) دیده می‌شود */
+  -webkit-backdrop-filter: blur(18px); /* همین افکت برای سافاری */
+  border-bottom: 1px solid transparent; /* خط پایین در حالت عادی نامرئی */
+}
+
+/* فقط اگر مرورگر «تایم‌لاین اسکرول» را پشتیبانی کند، این انیمیشن اجرا می‌شود.
+   مرورگرهای قدیمی همان هدر نیمه‌شفاف ساده را نشان می‌دهند و چیزی خراب نمی‌شود. */
+@supports (animation-timeline: --header-stick) {
+  .site-header {
+    animation: header-stuck linear both; /* انیمیشن تغییر رنگ هدر؛ بدون مدت زمان، چون با اسکرول جلو می‌رود */
+    animation-timeline: --header-stick; /* به‌جای زمان، با موقعیت اسکرول کنترل می‌شود */
+    animation-range: exit 0% exit 100%; /* دقیقاً از لحظه‌ی چسبیدن هدر تا رد شدن سنتینل */
+  }
+}
+
+/* حالت پایانی انیمیشن هدر: تیره‌تر می‌شود و خط پایینش پیدا می‌شود */
+@keyframes header-stuck {
+  to {
+    background-color: rgba(6, 9, 12, 0.96);
+    border-bottom-color: var(--line);
+  }
+}
+
+/* چیدمان داخل هدر: لوگو شروع، منو وسط، دکمه‌ها پایان */
+.header-inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  height: 78px;
+}
+
+/* لوگو + نام برند */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: none; /* در چیدمان فلکس، کوچک/بزرگ نشود */
+}
+
+/* جعبه‌ی سفید پشت لوگو */
+.brand-mark {
+  display: inline-flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 11px;
+  padding: 6px 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+/* اندازه‌ی خود تصویر لوگو */
+.brand-mark img {
+  height: 32px;
+  width: auto;
+}
+
+/* متن کنار لوگو (نام فارسی + انگلیسی) */
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.5;
+}
+
+/* نام فارسی شرکت */
+.brand-text strong {
+  font-size: 0.92rem;
+  font-weight: 800;
+}
+
+/* نام انگلیسی شرکت (زیر نام فارسی) */
+.brand-text small {
+  font-size: 0.58rem;
+  letter-spacing: 0.16em;
+  color: var(--muted-dark);
+  direction: ltr; /* این خط انگلیسی از چپ به راست است */
+}
+
+/* منوی اصلی: لینک‌ها در یک ردیف */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+}
+
+/* هر لینک منو */
+.nav-link {
+  position: relative; /* برای اینکه خط زیر لینک دقیق جای خودش بیفتد */
+  padding-block: 6px;
+  font-size: 0.88rem;
+  color: #c9d1da;
+  transition: color 0.25s;
+  white-space: nowrap; /* متن لینک در دو خط نشکند */
+}
+
+/* خط طلایی زیر لینک (در حالت عادی مخفی است) */
+.nav-link::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--gold);
+  transform: scaleX(0); /* از عرض صفر شروع می‌شود */
+  transform-origin: right; /* از سمت راست باز می‌شود */
+  transition: transform 0.3s var(--ease);
+}
+
+/* لینک هاور شده یا لینک بخش فعلی: سفید شود */
+.nav-link:hover,
+.nav-link.active {
+  color: #fff;
+}
+
+/* خط طلایی هاور/فعال باز شود */
+.nav-link:hover::after,
+.nav-link.active::after {
+  transform: scaleX(1);
+}
+
+/* ناحیه‌ی دکمه‌های هدر (کاتالوگ) */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: none;
+}
+
+/* دکمه‌ی همبرگری موبایل (در دسکتاپ مخفی است) */
+.menu-toggle {
+  display: none; /* فقط در حالت موبایل نمایش داده می‌شود */
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+/* سه خط داخل دکمه‌ی همبرگری */
+.menu-toggle span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--cream);
+  transition:
+    transform 0.3s var(--ease),
+    opacity 0.2s;
+}
+
+/* وقتی منو باز است (aria-expanded="true"): خط اول به شکل ضربدر می‌چرخد */
+.menu-toggle[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+/* خط وسط ناپدید می‌شود */
+.menu-toggle[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+}
+
+/* خط سوم در جهت مخالف می‌چرخد */
+.menu-toggle[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ---------- دکمه‌ها ---------- */
+
+/* شکل ظاهری مشترک همه‌ی دکمه‌ها */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 28px;
+  border: 1px solid transparent;
+  border-radius: 999px; /* گوشه‌های کاملاً گرد (کپسولی) */
+  font-size: 0.9rem;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    transform 0.3s var(--ease),
+    background 0.3s,
+    color 0.3s,
+    border-color 0.3s,
+    box-shadow 0.3s;
+}
+
+/* هاور دکمه: کمی بالا می‌پرد */
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+/* دکمه‌ی طلایی */
+.btn-gold {
+  background: linear-gradient(135deg, var(--gold-2), var(--gold));
+  color: #171207;
+  box-shadow: 0 12px 30px rgba(217, 166, 46, 0.22);
+}
+
+/* سایه‌ی دکمه‌ی طلایی در هاور بیشتر می‌شود */
+.btn-gold:hover {
+  box-shadow: 0 16px 38px rgba(217, 166, 46, 0.32);
+}
+
+/* دکمه‌ی شیشه‌ای (روی پس‌زمینه تیره) */
+.btn-ghost {
+  border-color: rgba(255, 255, 255, 0.24);
+  background: rgba(255, 255, 255, 0.03);
+  color: #fff;
+}
+
+/* هاور دکمه‌ی شیشه‌ای: کمی روشن‌تر */
+.btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.42);
+}
+
+/* دکمه‌ی تیره (روی پس‌زمینه روشن) */
+.btn-dark {
+  background: var(--ink);
+  color: var(--cream);
+}
+
+.btn-dark:hover {
+  background: #000;
+}
+
+/* دکمه‌ی خط‌دار تیره (روی پس‌زمینه روشن) */
+.btn-ghost-dark {
+  border-color: rgba(10, 8, 4, 0.26);
+  color: #1a1408;
+}
+
+.btn-ghost-dark:hover {
+  background: rgba(10, 8, 4, 0.08);
+  border-color: rgba(10, 8, 4, 0.44);
+}
+
+/* دکمه‌ی کوچک (مثل دکمه‌ی کاتالوگ در هدر) */
+.btn-sm {
+  padding: 10px 18px;
+  font-size: 0.8rem;
+}
+
+/* ---------- هیرو (بخش اول صفحه) ---------- */
+
+/* بخش اصلی بالای صفحه */
+.hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: clamp(
+    640px,
+    90vh,
+    880px
+  ); /* حداقل ۶۴۰، ترجیحاً ۹۰٪ ارتفاع صفحه، حداکثر ۸۸۰ */
+  overflow: hidden;
+  background: var(--ink);
+}
+
+/* لایه‌ی تصویر پس‌زمینه */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+}
+
+/* خود تصویر هیرو */
+.hero-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* تصویر کل فضا را پر کند */
+  object-position: 38% 58%; /* نقطه‌ی تمرکز تصویر */
+  filter: brightness(0.74) saturate(1.06); /* کمی تیره‌تر و پررنگ‌تر */
+  transform: scale(1.02); /* کمی بزرگ‌تر تا لبه‌ها دیده نشود */
+}
+
+/* لایه‌ی گرادیان روی تصویر تا متن خوانا شود */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      to left,
+      rgba(7, 10, 14, 0.97) 0%,
+      rgba(7, 10, 14, 0.9) 30%,
+      rgba(7, 10, 14, 0.42) 64%,
+      rgba(7, 10, 14, 0.04) 100%
+    ),
+    linear-gradient(to top, var(--ink) 0%, transparent 34%),
+    radial-gradient(
+      ellipse at 82% 18%,
+      rgba(217, 166, 46, 0.16),
+      transparent 55%
+    );
+}
+
+/* ظرف محتوای هیرو */
+.hero-inner {
+  position: relative;
+  z-index: 2; /* بالای لایه‌های تصویر */
+  display: flex;
+  align-items: center;
+  padding-block: 84px;
+}
+
+/* ستون متن هیرو */
+.hero-copy {
+  max-width: 640px;
+}
+
+/* برچسب کوچک بالای تیتر («از ۱۳۷۰ — ساخت ایران...») */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--gold-2);
+}
+
+/* خط کوچک کنار برچسب */
+.eyebrow-line {
+  width: 34px;
+  height: 1px;
+  background: var(--gold);
+}
+
+/* تیتر اصلی هیرو */
+.hero h1 {
+  margin: 0 0 20px;
+  font-size: clamp(2.3rem, 5vw, 4.25rem); /* واکنش‌گرا: بین ۲.۳ تا ۴.۲۵rem */
+  line-height: 1.24;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+/* متن طلایی («دوام برای یک عمر»): گرادیان روی خودِ حروف */
+.text-gold {
+  background: linear-gradient(120deg, var(--gold-2), var(--gold) 72%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* پاراگراف توضیح زیر تیتر */
+.hero-lead {
+  max-width: 55ch; /* هر خط حداکثر ۵۵ حرف */
+  margin: 0 0 32px;
+  font-size: clamp(0.98rem, 1.2vw, 1.1rem);
+  color: #c7cfd8;
+}
+
+/* ردیف دکمه‌های هیرو */
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 46px;
+}
+
+/* ردیف آمار (۳۵+ سال، ۲۰۰+ قطعه...) */
+.hero-stats {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 22px 0 0;
+  list-style: none;
+  border-top: 1px solid var(--line); /* خط بالای آمار */
+}
+
+/* هر آیتم آمار */
+.hero-stats li {
+  position: relative;
+  min-width: 122px;
+  padding-inline: 26px;
+}
+
+/* اولین آیتم بدون فاصله‌ی سمت شروع */
+.hero-stats li:first-child {
+  padding-inline-start: 0;
+}
+
+/* خط جداکننده‌ی عمودی بین آیتم‌های آمار */
+.hero-stats li + li::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  top: 8px;
+  bottom: 8px;
+  width: 1px;
+  background: var(--line);
+}
+
+/* عدد بزرگ آمار */
+.hero-stats strong {
+  display: block;
+  font-size: 1.65rem;
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--gold-2);
+}
+
+/* توضیح زیر عدد آمار */
+.hero-stats span {
+  font-size: 0.76rem;
+  color: var(--muted-dark);
+}
+
+/* نوشته‌ی «اسکرول کنید» پایین هیرو */
+.hero-scroll {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  z-index: 2;
+  transform: translateX(-50%);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  color: var(--muted-dark);
+}
+
+/* خط انیمیشنی زیر نوشته‌ی اسکرول */
+.hero-scroll::after {
+  content: "";
+  display: block;
+  width: 1px;
+  height: 32px;
+  margin: 8px auto 0;
+  background: linear-gradient(var(--gold), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+/* انیمیشن ضربان خط اسکرول */
+@keyframes scrollPulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scaleY(0.7);
+    transform-origin: top;
+  }
+  50% {
+    opacity: 1;
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+}
+
+/* ---------- نوار متحرک (Marquee) ---------- */
+
+/* نوار طلایی متحرک زیر هیرو */
+.marquee {
+  overflow: hidden;
+  background: linear-gradient(
+    90deg,
+    var(--gold),
+    var(--gold-2) 50%,
+    var(--gold)
+  );
+  border-block: 1px solid rgba(0, 0, 0, 0.12);
+  color: #171207;
+}
+
+/* ردیف متن‌های متحرک */
+.marquee-track {
+  display: flex;
+  width: max-content; /* عرض به اندازه‌ی محتوا */
+  animation: marquee 34s linear infinite; /* حرکت بی‌پایان به چپ */
+}
+
+/* هر جمله‌ی داخل نوار */
+.marquee-track > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 26px;
+  padding: 13px 26px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* ستاره‌ی جداکننده بین جمله‌ها */
+.marquee .sep {
+  color: rgba(23, 18, 7, 0.35);
+}
+
+/* با هاور موس، نوار متوقف می‌شود */
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* انیمیشن حرکت نوار: نصف عرض جابه‌جا می‌شود تا حلقه بی‌درز شود */
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ---------- بخش‌های عمومی صفحه ---------- */
+
+/* هر بخش: فاصله‌ی بالا و پایین */
+.section {
+  position: relative;
+  padding-block: clamp(72px, 9vw, 118px);
+}
+
+/* بخش با پس‌زمینه‌ی روشن */
+.section-light {
+  background: var(--paper);
+  color: var(--text);
+}
+
+/* بخش با پس‌زمینه‌ی کرم */
+.section-cream {
+  background: var(--cream);
+  color: var(--text);
+}
+
+/* بخش با پس‌زمینه‌ی تیره */
+.section-dark {
+  background: var(--ink);
+  color: var(--cream);
+}
+
+/* سرِ بخش‌ها: عنوان و توضیح، وسط‌چین */
+.section-head {
+  max-width: 720px;
+  margin: 0 auto clamp(40px, 5vw, 62px);
+  text-align: center;
+}
+
+/* برچسب کوچک بالای عنوان هر بخش */
+.section-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #9a6d0e; /* طلایی تیره برای خوانایی روی پس‌زمینه روشن */
+}
+
+/* خط کوچک قبل از برچسب */
+.section-kicker::before {
+  content: "";
+  width: 26px;
+  height: 1px;
+  background: currentColor; /* هم‌رنگ خود برچسب */
+}
+
+/* در بخش تیره، برچسب روشن‌تر می‌شود */
+.section-dark .section-kicker {
+  color: var(--gold-2);
+}
+
+/* عنوان هر بخش (h2) */
+.section h2 {
+  margin: 0 0 14px;
+  font-size: clamp(1.7rem, 3.1vw, 2.6rem);
+  font-weight: 800;
+  line-height: 1.38;
+  letter-spacing: -0.01em;
+}
+
+/* توضیح زیر عنوان بخش */
+.section-head p {
+  margin: 0;
+  font-size: 0.98rem;
+  color: var(--muted);
+}
+
+/* توضیح در بخش تیره */
+.section-dark .section-head p {
+  color: var(--muted-dark);
+}
+
+/* ---------- محصولات ---------- */
+
+/* شبکه‌ی سه‌ستونی کارت‌های محصول */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+/* هر کارت محصول */
+.product-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid var(--line-dark);
+  border-radius: var(--radius);
+  transition:
+    transform 0.4s var(--ease),
+    box-shadow 0.4s,
+    border-color 0.4s;
+}
+
+/* هاور کارت محصول: کمی بالا می‌آید و سایه می‌گیرد */
+.product-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(217, 166, 46, 0.55);
+  box-shadow: 0 24px 50px rgba(11, 14, 18, 0.12);
+}
+
+/* کادر تصویر محصول */
+.product-media {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1 / 1; /* مربع */
+  padding: 18px;
+  background: #f7f4ee;
+}
+
+/* تصویر محصول */
+.product-media img {
+  width: 82%;
+  height: 82%;
+  object-fit: contain; /* کل تصویر دیده شود، بدون برش */
+  transition: transform 0.5s var(--ease);
+}
+
+/* هاور کارت: تصویر کمی بزرگ می‌شود */
+.product-card:hover .product-media img {
+  transform: scale(1.06);
+}
+
+/* برچسب کد محصول گوشه‌ی تصویر */
+.product-code {
+  position: absolute;
+  top: 14px;
+  inset-inline-start: 14px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--gold-2);
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+/* بدنه‌ی کارت: نام و توضیح محصول */
+.product-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 7px;
+  padding: 20px 22px 24px;
+}
+
+/* نام محصول */
+.product-body h3 {
+  margin: 0;
+  font-size: 1.01rem;
+  font-weight: 800;
+  color: var(--text);
+}
+
+/* توضیح محصول */
+.product-body p {
+  margin: 0;
+  font-size: 0.84rem;
+  color: var(--muted);
+}
+
+/* لینک «استعلام قیمت» */
+.product-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto; /* چسبیدن به پایین کارت */
+  padding-top: 12px;
+  font-size: 0.81rem;
+  font-weight: 700;
+  color: #9a6d0e;
+  transition:
+    color 0.25s,
+    gap 0.25s;
+}
+
+/* هاور لینک: فلش کمی جلو می‌رود */
+.product-link:hover {
+  gap: 10px;
+  color: #6f4e07;
+}
+
+/* پایین بخش محصولات (دکمه‌ی کاتالوگ) */
+.section-foot {
+  display: flex;
+  justify-content: center;
+  margin-top: 42px;
+}
+
+/* ---------- دسته‌بندی‌ها ---------- */
+
+/* شبکه‌ی چهارستونی دسته‌بندی‌ها */
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+/* هر کارت دسته‌بندی */
+.category-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 214px;
+  overflow: hidden;
+  padding: 26px 24px 24px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: linear-gradient(160deg, var(--panel), #0c1117);
+  transition:
+    transform 0.35s var(--ease),
+    border-color 0.35s,
+    background 0.35s;
+}
+
+/* هاله‌ی طلایی محو گوشه‌ی کارت (در حالت عادی مخفی) */
+.category-card::after {
+  content: "";
+  position: absolute;
+  bottom: -60px;
+  inset-inline-start: -30px;
+  width: 170px;
+  height: 170px;
+  background: radial-gradient(
+    circle,
+    rgba(217, 166, 46, 0.16),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.35s;
+  pointer-events: none;
+}
+
+/* هاور کارت دسته‌بندی */
+.category-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(217, 166, 46, 0.5);
+  background: linear-gradient(160deg, #17202b, #0c1117);
+}
+
+/* هاله در هاور دیده می‌شود */
+.category-card:hover::after {
+  opacity: 1;
+}
+
+/* شماره‌ی دسته‌بندی (۰۱، ۰۲...) گوشه‌ی کارت */
+.category-index {
+  position: absolute;
+  top: 18px;
+  inset-inline-end: 20px;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  color: var(--muted-dark);
+}
+
+/* آیکون داخل کادر کوچک طلایی */
+.category-icon {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  margin-bottom: 4px;
+  border: 1px solid rgba(217, 166, 46, 0.24);
+  border-radius: 14px;
+  background: rgba(217, 166, 46, 0.09);
+  color: var(--gold-2);
+}
+
+/* ویرایش خودت: اندازه‌ی مشترک لوگوهای دسته‌بندی (فایل svg/png) */
+.logo {
+  width: 30px;
+}
+
+/* اندازه‌ی آیکون‌های svg که مستقیم داخل کادر هستند */
+.category-icon svg {
+  width: 23px;
+  height: 23px;
+}
+
+/* نام دسته‌بندی */
+.category-card h3 {
+  margin: 0;
+  font-size: 0.98rem;
+  font-weight: 800;
+}
+
+/* توضیح دسته‌بندی */
+.category-card p {
+  margin: 0;
+  font-size: 0.79rem;
+  line-height: 1.8;
+  color: var(--muted-dark);
+}
+
+/* فلش پایین کارت */
+.category-arrow {
+  margin-top: auto; /* چسبیده به پایین کارت */
+  font-size: 1.05rem;
+  color: var(--gold);
+  transition: transform 0.3s var(--ease);
+}
+
+/* هاور کارت: فلش به سمت شروع (چپ در RTL) حرکت می‌کند */
+.category-card:hover .category-arrow {
+  transform: translateX(-5px);
+}
+
+/* ---------- درباره ما ---------- */
+
+/* چیدمان دوستونی: متن و تصاویر */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.02fr 1fr;
+  gap: clamp(36px, 5vw, 76px);
+  align-items: center;
+}
+
+/* پاراگراف‌های متن درباره ما */
+.about-copy > p {
+  margin: 0 0 14px;
+  font-size: 0.94rem;
+  color: var(--muted);
+}
+
+/* فاصله‌ی عنوان درباره ما */
+.about-copy h2 {
+  margin-bottom: 18px;
+}
+
+/* کادر مادر تصاویر (تصویر بزرگ و کوچک روی هم) */
+.about-media {
+  position: relative;
+  min-height: 540px;
+}
+
+/* تصویر بزرگ اصلی */
+.about-main {
+  position: absolute;
+  inset: 0 0 64px 56px; /* پایین و چپ فضا باز بماند برای تصویر کوچک و نشان */
+  margin: 0;
+  overflow: hidden;
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+}
+
+.about-main img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* تصویر کوچک روی تصویر بزرگ */
+.about-secondary {
+  position: absolute;
+  bottom: 0;
+  inset-inline-start: 0;
+  width: 47%;
+  margin: 0;
+  overflow: hidden;
+  border: 6px solid var(--cream);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+}
+
+.about-secondary img {
+  width: 100%;
+  height: 196px;
+  object-fit: cover;
+}
+
+/* نشان «۳۵+ سال تجربه» */
+.experience-badge {
+  position: absolute;
+  bottom: 42px;
+  inset-inline-end: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 22px;
+  border: 1px solid rgba(217, 166, 46, 0.4);
+  border-radius: 16px;
+  background: var(--ink);
+  color: var(--cream);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
+}
+
+/* عدد «۳۵+» در نشان */
+.experience-badge strong {
+  font-size: 1.75rem;
+  line-height: 1.1;
+  color: var(--gold-2);
+}
+
+/* متن «سال تجربه» در نشان */
+.experience-badge span {
+  margin-top: 4px;
+  font-size: 0.7rem;
+  color: var(--muted-dark);
+}
+
+/* خط زمان تاریخچه شرکت */
+.timeline {
+  position: relative;
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* خط عمودی سمت راست خط زمان */
+.timeline::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  inset-inline-start: 7px;
+  width: 1px;
+  background: rgba(11, 14, 18, 0.14);
+}
+
+/* هر مرحله از خط زمان */
+.timeline li {
+  position: relative;
+  padding-inline-start: 34px;
+  padding-bottom: 20px;
+}
+
+/* آخرین مرحله بدون فاصله‌ی اضافه */
+.timeline li:last-child {
+  padding-bottom: 0;
+}
+
+/* نقطه‌ی طلایی روی خط زمان */
+.timeline li::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  inset-inline-start: 2px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 0 4px rgba(217, 166, 46, 0.18);
+}
+
+/* سال در خط زمان */
+.timeline span {
+  font-size: 0.71rem;
+  font-weight: 800;
+  color: #9a6d0e;
+}
+
+/* عنوان مرحله */
+.timeline h3 {
+  margin: 2px 0;
+  font-size: 0.92rem;
+  font-weight: 800;
+}
+
+/* توضیح مرحله */
+.timeline p {
+  margin: 0;
+  font-size: 0.79rem;
+  color: var(--muted);
+}
+
+/* ---------- کیفیت ---------- */
+
+/* پس‌زمینه‌ی بخش کیفیت با دو هاله‌ی طلایی */
+.quality {
+  background:
+    radial-gradient(
+      ellipse at 12% 8%,
+      rgba(217, 166, 46, 0.12),
+      transparent 42%
+    ),
+    radial-gradient(
+      ellipse at 88% 92%,
+      rgba(217, 166, 46, 0.07),
+      transparent 45%
+    ),
+    var(--ink);
+}
+
+/* شبکه‌ی سه‌ستونی کارت‌های کیفیت */
+.quality-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 48px;
+}
+
+/* هر کارت کیفیت */
+.quality-card {
+  padding: 30px 26px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.03);
+  transition:
+    transform 0.35s var(--ease),
+    border-color 0.35s,
+    background 0.35s;
+}
+
+/* هاور کارت کیفیت */
+.quality-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(217, 166, 46, 0.4);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* کادر آیکون کارت کیفیت */
+.quality-icon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 18px;
+  border: 1px solid rgba(217, 166, 46, 0.24);
+  border-radius: 14px;
+  background: rgba(217, 166, 46, 0.09);
+  color: var(--gold-2);
+}
+
+/* اندازه‌ی آیکون‌های svg داخل کارت کیفیت */
+.quality-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* عنوان کارت کیفیت */
+.quality-card h3 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+/* توضیح کارت کیفیت */
+.quality-card p {
+  margin: 0;
+  font-size: 0.84rem;
+  color: var(--muted-dark);
+}
+
+/* ردیف نشان‌های استاندارد و نقل‌قول */
+.standards {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  padding-top: 36px;
+  border-top: 1px solid var(--line);
+}
+
+/* هر نشان استاندارد */
+.standard-badge {
+  min-width: 178px;
+  padding: 13px 20px;
+  border: 1px solid rgba(217, 166, 46, 0.38);
+  border-radius: 14px;
+  background: rgba(217, 166, 46, 0.06);
+}
+
+/* نام استاندارد */
+.standard-badge strong {
+  display: block;
+  font-size: 0.93rem;
+  color: var(--gold-2);
+}
+
+/* توضیح استاندارد */
+.standard-badge span {
+  font-size: 0.72rem;
+  color: var(--muted-dark);
+}
+
+/* نقل‌قول پایین بخش کیفیت، در سمت پایان (چپ) */
+.standards blockquote {
+  max-width: 460px;
+  margin: 0;
+  margin-inline-start: auto;
+  font-size: 1.06rem;
+  font-weight: 600;
+  line-height: 1.8;
+  color: #e9e3d7;
+}
+
+/* ---------- گالری ---------- */
+
+/* شبکه‌ی سه‌ستونی تصاویر گالری */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+/* هر تصویر گالری (دکمه‌ای که لایت‌باکس را باز می‌کند) */
+.gallery-item {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 18px;
+  background: #dfd8ca;
+  cursor: zoom-in; /* نشانگر ذره‌بین */
+}
+
+/* لایه‌ی تیره‌ی پایین تصویر برای خوانایی عنوان */
+.gallery-item::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(7, 10, 14, 0.78), transparent 58%);
+  opacity: 0.9;
+  transition: opacity 0.35s;
+}
+
+/* تصویر گالری */
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--ease);
+}
+
+/* هاور: تصویر بزرگ‌نمایی می‌شود */
+.gallery-item:hover img {
+  transform: scale(1.06);
+}
+
+/* هاور: لایه‌ی تیره پررنگ‌تر می‌شود */
+.gallery-item:hover::after {
+  opacity: 1;
+}
+
+/* عنوان زیر تصویر */
+.gallery-caption {
+  position: absolute;
+  bottom: 16px;
+  inset-inline-start: 18px;
+  z-index: 2;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #fff;
+  text-align: start;
+}
+
+/* ---------- نوار کاتالوگ ---------- */
+
+/* نوار تمام‌عرض طلایی معرفی کاتالوگ */
+.catalog-band {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(120deg, var(--gold-2), var(--gold));
+  color: #1a1408;
+}
+
+/* بافت خط‌های مورب محو روی نوار */
+.catalog-band::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(10, 8, 4, 0.045) 0 2px,
+    transparent 2px 14px
+  );
+  pointer-events: none;
+}
+
+/* چیدمان دوستونی: متن و جلد کاتالوگ */
+.catalog-inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 44px;
+  align-items: center;
+}
+
+/* لینک دور جلد کاتالوگ؛ بدون ساختن آیتم جدید در گرید */
+.catalog-inner > a {
+  display: contents;
+  cursor: pointer;
+}
+
+/* برچسب بالای عنوان در نوار طلایی */
+.catalog-copy .section-kicker {
+  color: rgba(26, 20, 8, 0.68);
+}
+
+/* عنوان کاتالوگ */
+.catalog-copy h2 {
+  margin: 0 0 14px;
+  font-size: clamp(1.8rem, 3.2vw, 2.7rem);
+  font-weight: 800;
+  line-height: 1.36;
+}
+
+/* توضیح کاتالوگ */
+.catalog-copy p {
+  max-width: 55ch;
+  margin: 0 0 28px;
+  color: rgba(26, 20, 8, 0.72);
+}
+
+/* ردیف دکمه‌های کاتالوگ */
+.catalog-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* جلد سه‌بعدی‌نمای کاتالوگ */
+.catalog-cover {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+  width: min(280px, 82%);
+  aspect-ratio: 3 / 4; /* نسبت جلد کتاب */
+  padding: 26px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px 20px 20px 8px; /* گوشه‌ی عطف کتاب */
+  background: linear-gradient(155deg, #111821, #070a0e);
+  color: var(--cream);
+  box-shadow: 0 30px 60px rgba(10, 8, 4, 0.35);
+  transform: rotate(-5deg); /* کمی کج، مثل کتاب */
+}
+
+/* نوشته‌ی بالای جلد (SHIBA) */
+.cover-top {
+  font-size: 1.8rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: var(--gold-2);
+  direction: ltr;
+  text-align: left;
+}
+
+/* خط طلایی زیر نام */
+.cover-line {
+  height: 2px;
+  margin: 12px 0 24px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+}
+
+/* عنوان روی جلد */
+.cover-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+
+/* زیرعنوان جلد */
+.cover-sub {
+  margin-top: 6px;
+  font-size: 0.78rem;
+  color: var(--muted-dark);
+}
+
+/* نوشته‌ی پایین جلد */
+.cover-bottom {
+  margin-top: auto;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: var(--gold-2);
+}
+
+/* ---------- تماس با ما ---------- */
+
+/* شبکه‌ی دوستونی کارت‌های تماس */
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+/* هر کارت تماس */
+.contact-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 28px;
+  border: 1px solid var(--line-dark);
+  border-radius: 18px;
+  background: #fff;
+  transition:
+    transform 0.35s var(--ease),
+    border-color 0.35s,
+    box-shadow 0.35s;
+}
+
+/* هاور کارت تماس */
+.contact-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(217, 166, 46, 0.5);
+  box-shadow: 0 20px 44px rgba(11, 14, 18, 0.09);
+}
+
+/* کادر آیکون کارت تماس */
+.contact-icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(217, 166, 46, 0.1);
+  color: #9a6d0e;
+}
+
+/* اندازه‌ی آیکون svg داخل کارت تماس */
+.contact-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* عنوان کارت تماس */
+.contact-card h3 {
+  margin: 0 0 6px;
+  font-size: 0.94rem;
+  font-weight: 800;
+}
+
+/* متن کارت تماس */
+.contact-card p {
+  margin: 0 0 8px;
+  font-size: 0.84rem;
+  color: var(--muted);
+}
+
+/* لینک‌های کارت تماس (تلفن و...) */
+.contact-card a {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #9a6d0e;
+  transition: color 0.25s;
+}
+
+.contact-card a:hover {
+  color: #6f4e07;
+}
+
+/* چند شماره تلفن زیر هم */
+.contact-card .phones {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+/* ---------- فوتر ---------- */
+
+/* فوتر سایت */
+.footer {
+  padding-top: 62px;
+  border-top: 1px solid var(--line);
+  background: #05080b;
+  color: var(--muted-dark);
+}
+
+/* شبکه‌ی سه‌ستونی فوتر */
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 0.8fr 1fr;
+  gap: 40px;
+  padding-bottom: 44px;
+}
+
+/* توضیح کوتاه زیر لوگو در فوتر */
+.footer-brand p {
+  max-width: 40ch;
+  margin: 16px 0 0;
+  font-size: 0.82rem;
+}
+
+/* عنوان ستون‌های فوتر */
+.footer h3 {
+  margin: 0 0 14px;
+  font-size: 0.9rem;
+  color: var(--cream);
+}
+
+/* لینک‌های ستون فوتر زیر هم */
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  font-size: 0.84rem;
+}
+
+/* تغییر رنگ نرم لینک‌های فوتر */
+.footer-links a {
+  transition:
+    color 0.25s,
+    transform 0.25s;
+}
+
+.footer-links a:hover {
+  color: var(--gold-2);
+}
+
+/* هر خط اطلاعات تماس در فوتر */
+.footer-contact p {
+  margin: 0 0 9px;
+  font-size: 0.82rem;
+}
+
+.footer-contact a:hover {
+  color: var(--gold-2);
+}
+
+/* ردیف پایین فوتر: کپی‌رایت و دکمه‌ی بازگشت به بالا */
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-block: 20px;
+  border-top: 1px solid var(--line);
+  font-size: 0.73rem;
+}
+
+.footer-bottom p {
+  margin: 0;
+}
+
+/* دکمه‌ی دایره‌ای «بازگشت به بالا» */
+.back-top {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--cream);
+  transition:
+    border-color 0.25s,
+    color 0.25s,
+    transform 0.25s;
+}
+
+.back-top:hover {
+  transform: translateY(-2px);
+  border-color: var(--gold);
+  color: var(--gold-2);
+}
+
+/* ---------- دکمه‌های شناور (تماس سریع) ---------- */
+
+/* ظرف دکمه‌های شناور، ثابت پایین صفحه */
+.fab {
+  position: fixed;
+  bottom: 22px;
+  inset-inline-start: 22px;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* هر دکمه‌ی شناور */
+.fab a {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--gold-2);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+  transition:
+    transform 0.25s var(--ease),
+    background 0.25s;
+}
+
+/* دکمه‌ی شناور طلایی (تماس تلفنی) */
+.fab a.gold {
+  border: 0;
+  background: linear-gradient(135deg, var(--gold-2), var(--gold));
+  color: #171207;
+}
+
+.fab a:hover {
+  transform: translateY(-3px);
+}
+
+/* ---------- لایت‌باکس گالری (پنجره‌ی بزرگ تصویر) ---------- */
+
+/* پنجره‌ی لایت‌باکس (از تگ dialog استفاده شده) */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  width: min(1100px, 92vw);
+  max-width: 1100px;
+  max-height: 90vh;
+  margin: auto; /* وسط صفحه */
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--cream);
+}
+
+/* پس‌زمینه‌ی پشت لایت‌باکس (بقیه‌ی صفحه تاریک و محو می‌شود) */
+.lightbox::backdrop {
+  background: rgba(4, 6, 9, 0.92);
+  backdrop-filter: blur(6px);
+}
+
+/* کادر تصویر داخل لایت‌باکس */
+.lightbox figure {
+  margin: 0;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #000;
+}
+
+/* خود تصویر بزرگ */
+.lightbox img {
+  width: 100%;
+  max-height: 76vh;
+  object-fit: contain;
+  margin: auto;
+}
+
+/* عنوان تصویر پایین لایت‌باکس */
+.lightbox figcaption {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  padding: 44px 20px 16px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+/* دکمه‌های بستن و بعدی/قبلی لایت‌باکس */
+.lb-close,
+.lb-nav {
+  position: absolute;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 50%;
+  background: rgba(8, 11, 15, 0.72);
+  color: #fff;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition:
+    background 0.25s,
+    border-color 0.25s;
+}
+
+/* هاور دکمه‌ها: طلایی می‌شوند */
+.lb-close:hover,
+.lb-nav:hover {
+  background: rgba(217, 166, 46, 0.9);
+  color: #171207;
+  border-color: transparent;
+}
+
+/* جای دکمه‌ی بستن */
+.lb-close {
+  top: 10px;
+  inset-inline-end: 10px;
+}
+
+/* دکمه‌ی تصویر قبلی (سمت راست) */
+.lb-prev {
+  top: 50%;
+  right: 10px;
+  left: auto;
+  transform: translateY(-50%);
+}
+
+/* دکمه‌ی تصویر بعدی (سمت چپ) */
+.lb-next {
+  top: 50%;
+  left: 10px;
+  right: auto;
+  transform: translateY(-50%);
+}
+
+/* ---------- ظاهر شدن نرم عناصر (Reveal) ---------- */
+
+/* فقط وقتی جاوااسکریپت فعال است (کلاس js روی html)، عناصر اول مخفی‌اند */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(26px); /* کمی پایین‌تر */
+  transition:
+    opacity 0.7s var(--ease),
+    transform 0.7s var(--ease);
+  transition-delay: var(--d, 0s); /* تاخیر دلخواه هر عنصر با متغیر --d */
+}
+
+/* وقتی عنصر به دید کاربر آمد، کلاس in اضافه می‌شود و ظاهر می‌شود */
+.js .reveal.in {
+  opacity: 1;
+  transform: none;
+}
+
+/* وقتی منو یا لایت‌باکس باز است، صفحه اسکرول نشود */
+.no-scroll {
+  overflow: hidden;
+}
+
+/* ---------- واکنش‌گرا (نمایشگرهای کوچک‌تر) ---------- */
+
+/* عرض حداکثر ۱۱۰۰ پیکسل: نام انگلیسی کنار لوگو حذف شود */
+@media (max-width: 1100px) {
+  .nav {
+    gap: 18px;
+  }
+}
+
+/* عرض حداکثر ۹۸۰ پیکسل: منوی موبایل و چیدمان‌های دوستونی */
+@media (max-width: 980px) {
+  /* در موبایل افکت شیشه‌ای هدر حذف می‌شود (کارایی بهتر) */
+  .site-header {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  /* منو تمام‌صفحه و پنهان می‌شود */
+  .nav {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+    background: #05080b;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.3s,
+      visibility 0.3s;
+  }
+
+  /* منوی باز (کلاسی که جاوااسکریپت اضافه می‌کند) */
+  .nav.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* لینک‌های منوی موبایل بزرگ‌تر */
+  .nav-link {
+    padding: 12px 24px;
+    font-size: 1.15rem;
+  }
+
+  /* خط زیر لینک‌ها در موبایل لازم نیست */
+  .nav-link::after {
+    display: none;
+  }
+
+  /* دکمه‌ی همبرگری نمایش داده می‌شود */
+  .menu-toggle {
+    display: flex;
+  }
+
+  /* دکمه‌ها و لوگو بالای منوی باز بمانند */
+  .header-actions {
+    position: relative;
+    z-index: 3;
+  }
+
+  .brand {
+    position: relative;
+    z-index: 3;
+  }
+
+  /* دکمه‌ی کاتالوگ در هدر موبایل مخفی می‌شود */
+  .header-actions .btn {
+    display: none;
+  }
+
+  /* هدر کمی کوتاه‌تر */
+  .header-inner {
+    height: 70px;
+  }
+
+  .brand-mark img {
+    height: 29px;
+  }
+
+  /* محصولات دوستونی */
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* دسته‌بندی‌ها دوستونی */
+  .category-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* درباره ما یک‌ستونی */
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 44px;
+  }
+
+  .about-media {
+    min-height: 500px;
+  }
+
+  /* کیفیت دوستونی */
+  .quality-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .standards blockquote {
+    margin-inline-start: 0;
+  }
+
+  /* کاتالوگ یک‌ستونی و جلد مخفی */
+  .catalog-inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .catalog-cover {
+    display: none;
+  }
+
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* عرض حداکثر ۷۶۰ پیکسل: پنهان شدن نوار بالا و تنظیم هیرو */
+@media (max-width: 760px) {
+  /* نوار بالای سایت در موبایل مخفی می‌شود (چون هدر از همان اول بالاست) */
+  .topbar {
+    display: none;
+  }
+
+  .hero {
+    min-height: auto;
+    padding-block: 104px 88px;
+  }
+
+  .hero-overlay {
+    background:
+      linear-gradient(
+        to top,
+        var(--ink) 2%,
+        rgba(7, 10, 14, 0.9) 42%,
+        rgba(7, 10, 14, 0.52) 100%
+      ),
+      radial-gradient(
+        ellipse at 80% 15%,
+        rgba(217, 166, 46, 0.14),
+        transparent 55%
+      );
+  }
+
+  .hero-scroll {
+    display: none;
+  }
+
+  .hero-actions {
+    margin-bottom: 36px;
+  }
+
+  /* آمارها دو ستون */
+  .hero-stats li {
+    min-width: 46%;
+    padding-inline: 0;
+    margin-bottom: 16px;
+  }
+
+  .hero-stats li + li::before {
+    display: none;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+
+  .footer-brand {
+    grid-column: 1 / -1;
+  }
+}
+
+/* عرض حداکثر ۵۸۰ پیکسل: تک‌ستونی شدن همه چیز */
+@media (max-width: 580px) {
+  .container {
+    width: calc(100% - 36px);
+  }
+
+  .hero h1 {
+    font-size: clamp(2rem, 9vw, 2.8rem);
+  }
+
+  .product-grid,
+  .category-grid,
+  .quality-grid,
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .product-media {
+    aspect-ratio: 4 / 3;
+  }
+
+  .about-media {
+    min-height: 400px;
+  }
+
+  .about-main {
+    inset: 0 0 44px 32px;
+  }
+
+  .about-secondary {
+    width: 54%;
+  }
+
+  .about-secondary img {
+    height: 150px;
+  }
+
+  .experience-badge {
+    bottom: 34px;
+    padding: 12px 16px;
+  }
+
+  .standards {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .standards blockquote {
+    margin-top: 6px;
+  }
+
+  .catalog-actions .btn {
+    width: 100%;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .fab {
+    display: none;
+  }
+}
+
+/* اگر کاربر در تنظیمات سیستم «کم کردن حرکت‌ها» را فعال کرده باشد:
+   انیمیشن‌ها و اسکرول نرم خاموش می‌شوند (رعایت دسترس‌پذیری) */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .marquee-track,
+  .hero-scroll::after {
+    animation: none;
+  }
+
+  .btn,
+  .product-card,
+  .category-card,
+  .contact-card,
+  .gallery-item img {
+    transition: none;
+  }
+}
